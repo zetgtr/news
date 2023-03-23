@@ -2,7 +2,7 @@
     "name": "zetgtr/news",
     "description": "My package description",
     "keywords": ["laravel", "package"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "authors": [
         {
@@ -16,13 +16,21 @@
     },
     "autoload": {
         "psr-4": {
-            "News\\": "src/"
+            "News\\": "src/",
+            "News\\Seeders\\": "database/seeders/"
         }
     },
     "scripts": {
         "test": [
             "vendor/bin/phpunit"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "News\\Providers\\NewsServiceProvider"
+            ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
