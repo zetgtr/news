@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use News\QueryBuilder\CategoryBuilder;
 use News\QueryBuilder\NewsBuilder;
 use News\QueryBuilder\QueryBuilder;
+use News\Seeders\DatabaseSeeder;
 
 class NewsServiceProvider extends ServiceProvider
 {
@@ -32,5 +33,6 @@ class NewsServiceProvider extends ServiceProvider
     {
         $this->app->bind(QueryBuilder::class, NewsBuilder::class);
         $this->app->bind(QueryBuilder::class, CategoryBuilder::class);
+        $this->app->register(DatabaseSeeder::class);
     }
 }
