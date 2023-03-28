@@ -2,7 +2,7 @@
     "name": "zetgtr/news",
     "description": "My package description",
     "keywords": ["laravel", "package"],
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +12,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "laravel/framework": "^10.0"
+        "laravel/framework": "^10.0",
+        "laravel/fortify": "^1.16"
     },
     "autoload": {
         "psr-4": {

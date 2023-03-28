@@ -5,6 +5,7 @@ namespace News\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use News\Enums\NewsEnums;
 use News\Models\News;
 use News\QueryBuilder\NewsBuilder;
@@ -18,6 +19,8 @@ class NewsController extends Controller
      */
     public function index(NewsBuilder $newsBuilder)
     {
+        dd(session()->get('auth_user'));
+
         return view('news::news.index',[
             'links' => $newsBuilder->getLinks(NewsEnums::NEWS->value)
         ]);
