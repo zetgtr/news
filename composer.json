@@ -2,7 +2,7 @@
     "name": "zetgtr/news",
     "description": "My package description",
     "keywords": ["laravel", "package"],
-    "version": "1.0.5",
+    "version": "1.0.7",
     "license": "MIT",
     "authors": [
         {
