@@ -26,4 +26,12 @@ class CategoryRequest extends FormRequest
             'url' => ['required','min:2']
         ];
     }
+    public function prepareForValidation()
+    {
+        if (!$this->input('url')) {
+            $this->merge([
+                'url' => str_slug($this->input('name'))
+            ]);
+        }
+    }
 }

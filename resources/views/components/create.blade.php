@@ -18,8 +18,8 @@
                 {{ session('success') }}
             </div>
         @endif
-        <x-admin.news.content />
-        <x-admin.news.seo />
+        <x-news::content />
+        <x-news::seo />
         <button type="submit" name="save" class="btn btn-sm btn-success">Сохранить</button>
     </form>
 </div>

@@ -4,13 +4,12 @@ namespace News\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class IsAdmin
+class Auth
 {
     public function handle(Request $request, Closure $next)
     {
-        if(!Auth::user()->is_admin)
+        if(!auth()->check())
         {
             return redirect()->route('home');
         }

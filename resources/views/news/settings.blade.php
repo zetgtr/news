@@ -5,7 +5,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <x-admin.navigation :links="$links" />
-                <x-admin.news.settings />
+                <x-news::settings />
             </div>
         </div>
     </div>

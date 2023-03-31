@@ -19,8 +19,8 @@
                 {{ session('success') }}
             </div>
         @endif
-        <x-admin.news.edit-content :news="$news" />
-        <x-admin.news.edit-seo :news="$news" />
+        <x-news::edit-content :newsItem="$news" />
+        <x-news::edit-seo :news="$news" />
         <button type="submit" name="save" class="btn btn-sm btn-success">Сохранить</button>
     </form>
 </div>

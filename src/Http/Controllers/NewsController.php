@@ -6,21 +6,21 @@ namespace News\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use News\Enums\NewsEnums;
 use News\Models\News;
 use News\QueryBuilder\NewsBuilder;
 use News\Requests\CreateRequest;
 use News\Requests\UpdateRequest;
+use Illuminate\Contracts\Validation\Factory;
 
 class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(NewsBuilder $newsBuilder)
+    public function index(NewsBuilder $newsBuilder,Request $request)
     {
-        dd(session()->get('auth_user'));
-
         return view('news::news.index',[
             'links' => $newsBuilder->getLinks(NewsEnums::NEWS->value)
         ]);
@@ -29,11 +29,11 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(NewsBuilder $newsBuilder)
+    public function create(NewsBuilder $newsBuilder,Factory $factory)
     {
         return view('news::news.create',[
             'linksContent' => $newsBuilder->getLinksContent(NewsEnums::CONTENT->value),
-            'links' => $newsBuilder->getLinks(NewsEnums::POST->value)
+            'links' => $newsBuilder->getLinks(NewsEnums::POST->value),
         ]);
     }
 

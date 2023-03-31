@@ -3,6 +3,7 @@
 namespace News\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use News\Models\News;
@@ -46,7 +47,7 @@ class CreateRequest extends FormRequest
             'content' => ['required', 'min:2'],
             'description' => ['required'],
             'url' => ['required', Rule::unique(News::class)->ignore($this->id)],
-            'created_at' => ['nullable'],
+            'created_at' => ['required'],
             'images' => ['sometimes'],
             'seoTitle' => ['nullable','string'],
             'seoKeywords' => ['nullable', 'string'],
@@ -67,6 +68,12 @@ class CreateRequest extends FormRequest
                 'url' => str_slug($this->input('title'))
             ]);
         }
+        if (!$this->input('created_at')) {
+            $this->merge([
+                'created_at' => Date::now()->toDateTimeString()
+            ]);
+        }
+
     }
 
     public function attributes(): array

@@ -5,8 +5,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <x-admin.navigation :links="$links" />
-                @component('news::components.news')
-{{--                <x-news::news />--}}
+                <x-news::news />
             </div>
         </div>
     </div>
