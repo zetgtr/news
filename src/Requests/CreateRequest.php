@@ -4,6 +4,7 @@ namespace News\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use News\Models\News;
@@ -65,7 +66,12 @@ class CreateRequest extends FormRequest
     {
         if (!$this->input('url')) {
             $this->merge([
-                'url' => str_slug($this->input('title'))
+                'url' => str_slug($this->input('title')),
+            ]);
+        }
+        if (!$this->input('seoTitle')) {
+            $this->merge([
+                'seoTitle' => $this->input('title'),
             ]);
         }
         if (!$this->input('created_at')) {
@@ -73,7 +79,32 @@ class CreateRequest extends FormRequest
                 'created_at' => Date::now()->toDateTimeString()
             ]);
         }
+        $images = [];
+        if ($this->file('img')) {
+//            $news = News::find();
+//            if (file_exists($news->images))
+//                unlink($filePath);
+            foreach ($this->file('img') as $image)
+            {
+                $file = $image;
 
+                // Создание экземпляра Imagick изображения
+                $image = new \Imagick($file->getRealPath());
+
+                // Установка формата изображения в WebP
+                $image->setImageFormat('webp');
+
+                // Установка качества сжатия
+                $image->setImageCompressionQuality(70);
+
+                $fileName = 'news/' . uniqid() . '.webp';
+                $image->writeImage(public_path('storage/' . $fileName));
+                $images[] = "/storage/".$fileName;
+            }
+        }
+        $this->merge([
+            'images' => $images
+        ]);
     }
 
     public function attributes(): array

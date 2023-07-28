@@ -1,0 +1,40 @@
+{
+    "name": "zetgtr/news",
+    "description": "My package description",
+    "keywords": ["laravel", "package"],
+    "version": "1.1.6",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artem",
+            "email": "artem.kudrin70@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "News\\": "src/",
+            "News\\Seeders\\": "database/seeders/",
+            "News\\Remove\\": "remove"
+        }
+    },
+    "scripts": {
+        "test": [
+            "vendor/bin/phpunit"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "News\\Providers\\NewsServiceProvider"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "News\\Test\\": "tests/"
+        }
+    }
+}

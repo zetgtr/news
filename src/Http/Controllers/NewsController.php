@@ -13,9 +13,11 @@ use News\QueryBuilder\NewsBuilder;
 use News\Requests\CreateRequest;
 use News\Requests\UpdateRequest;
 use Illuminate\Contracts\Validation\Factory;
+use News\Models\Settings;
 
 class NewsController extends Controller
 {
+    const PAGINATE = 6;
     /**
      * Display a listing of the resource.
      */
@@ -77,6 +79,20 @@ class NewsController extends Controller
         ]);
     }
 
+    /**
+     * Handle the incoming request.
+     */
+    public function frontIndex()
+    {
+        return \view('news::news.front.index',[
+            'news'=>News::paginate(self::PAGINATE),
+            'settings'=> Settings::query()->find(1),
+]);
+    }
+    public function news(string $url)
+    {
+        return view('news::news.front.news',['news'=>News::where('url',$url)->first(),'settings'=> Settings::query()->find(1)]);
+    }
     /**
      * Update the specified resource in storage.
      */

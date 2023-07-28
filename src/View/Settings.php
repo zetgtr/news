@@ -6,7 +6,7 @@ namespace News\View;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use \App\Models\Admin\News\Settings as NewsSettings;
+use News\Models\Settings as NewsSettings;
 
 class Settings extends Component
 {

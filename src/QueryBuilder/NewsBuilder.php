@@ -4,6 +4,7 @@ namespace News\QueryBuilder;
 
 use Illuminate\Database\Eloquent\Collection;
 use News\Enums\NewsEnums;
+use News\Models\Category;
 use News\Models\News;
 
 class NewsBuilder extends QueryBuilder
@@ -36,6 +37,7 @@ class NewsBuilder extends QueryBuilder
 
         return $links;
     }
+
     public function getAll(): Collection
     {
         return $this->model->get();

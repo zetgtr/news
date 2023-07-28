@@ -16,6 +16,7 @@ class News extends Model
         'description',
         'images',
         'content',
+        'show',
         'seoKeywords',
         'seoTitle',
         'seoDescription',
@@ -32,4 +33,25 @@ class News extends Model
         return $this->belongsToMany(Category::class, 'categories_has_news',
             'news_id', 'category_id', 'id', 'id');
     }
+
+    public function getBredcrambs()
+    {
+        $bredcrambs = [
+            ['title'=>'Главная','url'=>'home'],
+            ['title'=>'Новости','url'=>'news']];
+        $bredcrambsSecond = [...$bredcrambs, ['title'=>$this->title,'url'=>$this->url]];
+
+        return $bredcrambsSecond;
+    }
+
+    public function getOther()
+    {
+        return $this::where('id','!=',$this->id)->limit(6)->inRandomOrder()->get();
+    }
+    public function setCountShow()
+    {
+        ++$this->show;
+        $this->save();
+    }
+
 }

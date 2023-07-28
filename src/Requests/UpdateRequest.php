@@ -5,6 +5,8 @@ namespace News\Requests;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use News\Models\News;
 
@@ -66,14 +68,49 @@ class UpdateRequest extends FormRequest
     {
         if (!$this->input('url')) {
             $this->merge([
-                'url' => str_slug($this->input('title'))
+                'url' => str_slug($this->input('title')),
             ]);
         }
+        if (!$this->input('seoTitle')) {
+            $this->merge([
+                'seoTitle' => $this->input('title'),
+            ]);
+        }
+
         if ($this->input('created_at')) {
             $this->merge([
                 'created_at' => Carbon::createFromFormat('d.m.Y H:i', $this->input('created_at'), 'Europe/Moscow')
             ]);
         }
+        $images = [];
+        if ($this->file('img')) {
+            $news = News::find($this->input('id'));
+            $imgArr = json_decode($news->images);
+            foreach ($this->file('img') as $image)
+            {
+                foreach ($imgArr as $img)
+                if($img){
+                    $filePath = public_path($img);
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                }}
+                $file = $image;
+                $image = new \Imagick($file->getRealPath());
+                $image->setImageFormat('webp');
+                $image->setImageCompressionQuality(70);
+                $fileName = "/".uniqid() . '.webp';
+                $folderName = 'news';
+                $disk = Storage::disk('public');
+                if (!$disk->exists($folderName)) {
+                    $disk->makeDirectory($folderName);
+                }
+                $image->writeImage( $disk->path($folderName) . $fileName);
+                $images[] = "/storage/".$folderName.$fileName;
+            }
+        }
+        $this->merge([
+            'images' => $images
+        ]);
     }
 
     public function attributes(): array
